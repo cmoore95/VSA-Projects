@@ -11,3 +11,12 @@ previous two numbers in the sequence. The sequence looks like this:
 """
 
 
+total=int(raw_input('How many Fibonacci numbers would you like? '))
+
+number=1
+cur=1
+prev=1
+while total < (total + 1):
+    total = total + 1
+    cur=cur+prev
+    print 

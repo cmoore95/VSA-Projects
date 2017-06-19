@@ -11,12 +11,14 @@ name = raw_input("Enter your name: ")
 age = int(raw_input("Enter your age: "))
 birthday = raw_input("Has your birthday happened this year? Enter Y or N: ")
 
-if birthday == "Y":
-    # Calculates the year that the user will be 100
-    year_100 = str((100 - age) + 2017)
+if birthday == 'Y':
+    year=2017
+elif birthday == 'N':
+    year=2016
 
-else:
-    # Calculates the year that the user will be 100
-    year_100 = str((100 - age) + 2016)
+while age < 100:
+    age=age +1
+    year=year+1
+    print year
 
-print name, " will turn 100 in the year ", year_100, "."
+print name,' will turn 100 in', year
