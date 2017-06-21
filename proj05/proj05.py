@@ -5,21 +5,40 @@
 
 # Part I
 
+
+
 def divisors(num):
-    """
-    Takes a number and returns all divisors of the number, ordered least to greatest
-    :param num: int
-    :return: list (int)
-    """
-    return 0
+    total=num
+    number=1
+    answer=0
+    list1 = []
+    while number<(total+1):
+        if total%number==0:
+            answer=(total/number)
+            list1.append(answer)
+        number=number+1
+    return list1[::-1]
+
+
+#    """
+#    Takes a number and returns all divisors of the number, ordered least to greatest
+#    :param num: int
+#    :return: list (int)
+#    """
+
 
 def prime(num):
-    """
-    Takes a number and returns True if the number is prime, otherwise False
-    :param num: int
-    :return: bool
-    """
-    return False
+    divisor_list=divisors(num)
+    length=len(divisor_list)
+    if length==1:
+        return False
+
+#    """
+#    Takes a number and returns True if the number is prime, otherwise False
+#    :param num: int
+#    :return: bool
+#    """
+#    return False
 
 # Part II
 
@@ -113,9 +132,21 @@ else:
 
 # Test 5
 if prime(7):
-    print("Test 5: PASS\n")
+    print("Test 5: PASS")
 else:
-    print("Test 5: FAIL\n")
+    print("Test 5: FAIL")
+
+# Test 5.1
+if prime(11):
+    print("Test 5.1: PASS\n")
+else:
+    print("Test 5.1: FAIL\n")
+
+# Test 5.2
+if prime(14):
+    print("Test 5.2: PASS\n")
+else:
+    print("Test 5.2: FAIL\n")
 
 L1 = []
 L2 = [3, 4]
