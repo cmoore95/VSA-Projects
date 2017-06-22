@@ -46,3 +46,44 @@ def choose_word(wordlist):
 wordlist = load_words()
 
 # your code begins here!
+
+
+def correct(word, letter_prompt, answer_list, wrong_list, guesses):
+
+    if letter_prompt in word:
+        answer_list.append(letter_prompt)
+        return answer_list
+    else:
+         wrong_list.append(letter_prompt)
+         return wrong_list
+
+#def partial_word():
+
+
+def hangman():
+    word=choose_word(wordlist)
+    letter_count=0
+    guesses=9
+    blank_word=[]
+    answer_list = []
+    wrong_list = []
+    print 'Welcome to hangman'
+    print word
+    for letter in word:
+        letter_count=letter_count+1
+    print 'Your word has',letter_count,'letters in it.'
+
+    while guesses>0:
+        letter_prompt = raw_input('Guess a letter ')
+        correct(word, letter_prompt, answer_list, wrong_list, guesses)
+        if answer_list:
+            guesses=guesses
+        else:
+            guesses=guesses-1
+        print 'You have', guesses, 'guesses left.'
+
+
+
+
+
+hangman()
