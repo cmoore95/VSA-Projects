@@ -63,7 +63,7 @@ def partial_word(letter_prompt,word,new_word,wrong_list):
 def hangman():
     word=choose_word(wordlist)
     letter_count=0
-    guesses=8
+    guesses=9
     blank_word=[]
     answer_list = []
     wrong_list = []
@@ -90,6 +90,6 @@ def hangman():
             guesses=guesses-1
         print 'You have', guesses, 'guesses left.'
     if guesses==0:
-        print 'Game over, you lose'
+        print 'Game over, you lose. Your word was', word
 
 hangman()
