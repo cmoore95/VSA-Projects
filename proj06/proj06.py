@@ -45,45 +45,51 @@ def choose_word(wordlist):
 # in the program
 wordlist = load_words()
 
-# your code begins here!
+#your code begins here!
 
-
-def correct(word, letter_prompt, answer_list, wrong_list, guesses):
-
+def partial_word(letter_prompt,word,new_word,wrong_list):
+    index=0
     if letter_prompt in word:
-        answer_list.append(letter_prompt)
-        return answer_list
+        for letter in word:
+            if letter_prompt==letter:
+                new_word[index] = letter_prompt
+            index=index+1
+        #return new_word
     else:
-         wrong_list.append(letter_prompt)
-         return wrong_list
-
-#def partial_word():
+        wrong_list.append(letter_prompt)
+    return wrong_list,new_word
 
 
 def hangman():
     word=choose_word(wordlist)
     letter_count=0
-    guesses=9
+    guesses=8
     blank_word=[]
     answer_list = []
     wrong_list = []
+    new_word = []
     print 'Welcome to hangman'
-    print word
     for letter in word:
         letter_count=letter_count+1
     print 'Your word has',letter_count,'letters in it.'
-
+    for letter in word:
+        new_word.append('_')
     while guesses>0:
         letter_prompt = raw_input('Guess a letter ')
-        correct(word, letter_prompt, answer_list, wrong_list, guesses)
-        if answer_list:
+        #correct(word, letter_prompt, answer_list, wrong_list, guesses)
+        wrong_list,new_word=partial_word(letter_prompt,word,new_word,wrong_list)
+        if letter_prompt in word:
+            print 'Congrats, you got that letter right.'
+            print "You've guessed these letters.",wrong_list
+            print new_word
             guesses=guesses
         else:
+            print "Guess again."
+            print "You've guessed these letters.",wrong_list
+            print new_word
             guesses=guesses-1
         print 'You have', guesses, 'guesses left.'
-
-
-
-
+    if guesses==0:
+        print 'Game over, you lose'
 
 hangman()
