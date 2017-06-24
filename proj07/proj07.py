@@ -153,6 +153,7 @@ def update_hand(hand, word):
     for letter in word:
         if letter in new_hand:
             new_hand[letter]=new_hand[letter]-1
+    print new_hand
     return new_hand
 
     # """
@@ -178,21 +179,24 @@ def update_hand(hand, word):
 def is_valid_word(word, hand, word_list):
     new_hand2=hand.copy()
 
-    # letter_count=0
-    # for letter in word:
-    #     letter_count=letter_count+1
-
     if word in word_list:
-        return True
 
 
 
 
 
-    for letter in word:
-        if letter in new_hand2:
-            if new_hand2[letter]
-            return True
+        for letter in word:
+            if new_hand2.get(letter,0)>0:
+                new_hand2[letter] = new_hand2[letter] - 1
+            else:
+                return False
+    else:
+        return False
+    return True
+
+
+
+
 
 
     # """
@@ -215,36 +219,49 @@ def calculate_handlen(hand):
 #
 # Problem #4: Playing a hand
 #
-def play_hand(hand, word_list):
+def play_hand(hand,word_list):
+    display_hand(hand)
+    word=raw_input("Enter word, or a '.' to indicate that you are finished: ")
+    valid_word=is_valid_word(word,hand,word_list)
+    if valid_word is True:
+        update_hand(hand,word)
+        get_word_score(word,HAND_SIZE)
+    else:
+        print 'Invalid word, please try again.'
 
-    """
-    Allows the user to play the given hand, as follows:
 
-    * The hand is displayed.
 
-    * The user may input a word.
 
-    * An invalid word is rejected, and a message is displayed asking
-      the user to choose another word.
-
-    * When a valid word is entered, it uses up letters from the hand.
-
-    * After every valid word: the score for that word is displayed,
-      the remaining letters in the hand are displayed, and the user
-      is asked to input another word.
-
-    * The sum of the word scores is displayed when the hand finishes.
-
-    * The hand finishes when there are no more unused letters.
-      The user can also finish playing the hand by inputing a single
-      period (the string '.') instead of a word.
-
-      hand: dictionary (string -> int)
-      word_list: list of lowercase strings
-
-    """
+    # """
+    # Allows the user to play the given hand, as follows:
+    #
+    # * The hand is displayed.
+    #
+    # * The user may input a word.
+    #
+    # * An invalid word is rejected, and a message is displayed asking
+    #   the user to choose another word.
+    #
+    # * When a valid word is entered, it uses up letters from the hand.
+    #
+    # * After every valid word: the score for that word is displayed,
+    #   the remaining letters in the hand are displayed, and the user
+    #   is asked to input another word.
+    #
+    # * The sum of the word scores is displayed when the hand finishes.
+    #
+    # * The hand finishes when there are no more unused letters.
+    #   The user can also finish playing the hand by inputing a single
+    #   period (the string '.') instead of a word.
+    #
+    #   hand: dictionary (string -> int)
+    #   word_list: list of lowercase strings
+    #
+    # """
     # TO DO ...
 
+# play=play_hand(hand,word_list)
+# print play
 #
 # Problem #5: Playing a game
 # Make sure you understand how this code works!
