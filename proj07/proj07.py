@@ -147,22 +147,14 @@ def deal_hand(n):
 #
 def update_hand(hand, word):
 
-    # new_hand = hand.copy()
-    # for letter in word:
-    #     if letter in new_hand:
-    #         new_hand[letter]=new_hand[letter]-1
-    # print new_hand
-    # return new_hand
-
     new_hand = hand.copy()
+
+
     for letter in word:
         if letter in new_hand:
-            new_hand[letter] = new_hand[letter] - 1
-    for letter in new_hand:
-        for j in range(new_hand[letter]):
-            print letter,
+            new_hand[letter]=new_hand[letter]-1
+    print new_hand
     return new_hand
-
 
     # """
     # Assumes that 'hand' has all the letters in word.
@@ -227,31 +219,18 @@ def calculate_handlen(hand):
 #
 # Problem #4: Playing a hand
 #
-
-
-def play_hand(hand, word_list):
+def play_hand(hand,word_list):
     display_hand(hand)
-    total = 0
-    word='jsh'
-    while HAND_SIZE!=0:
-        word = raw_input("Enter word, or a '.' to indicate that you are finished: ")
-        valid_word = is_valid_word(word, hand, word_list)
-        if word=='.':
-            print 'Your final score was',total,'points.'
-            return total
-        if valid_word is True:
-            total = total+get_word_score(word, HAND_SIZE)
-            print word, 'earned', get_word_score(word, HAND_SIZE), 'points. Your total is', total
-            hand=update_hand(hand, word)
-        else:
-            print 'Invalid word, please try again.'
-    if HAND_SIZE==0:
-        print 'Your final score was', total, 'points.'
-        return total
+    word=raw_input("Enter word, or a '.' to indicate that you are finished: ")
+    valid_word=is_valid_word(word,hand,word_list)
+    if valid_word is True:
+        update_hand(hand,word)
+        get_word_score(word,HAND_SIZE)
+    else:
+        print 'Invalid word, please try again.'
 
-#hand=deal_hand(7)
-#word_list=load_words()
-#play_hand(hand, word_list)
+
+
 
     # """
     # Allows the user to play the given hand, as follows:
@@ -281,46 +260,29 @@ def play_hand(hand, word_list):
     # """
     # TO DO ...
 
-
-
+# play=play_hand(hand,word_list)
+# print play
+#
 # Problem #5: Playing a game
 # Make sure you understand how this code works!
 #
-
 def play_game(word_list):
-    hand = deal_hand(HAND_SIZE)
-    nre='anything'
-    while nre != "e":
+    """
+    Allow the user to play an arbitrary number of hands.
 
-        nre=raw_input("Please input 'n', 'r', or 'e': ")
-        if nre=="n":
-            hand=deal_hand(HAND_SIZE)
-            play_hand(hand,word_list)
-        elif nre=="r":
-            play_hand(hand,word_list)
-        elif nre=="e":
-            break
+    * Asks the user to input 'n' or 'r' or 'e'.
 
+    * If the user inputs 'n', let the user play a new (random) hand.
+      When done playing the hand, ask the 'n' or 'e' question again.
 
+    * If the user inputs 'r', let the user play the last hand again.
 
-#play_game(word_list)
+    * If the user inputs 'e', exit the game.
 
+    * If the user inputs anything else, ask them again.
+    """
+    # TO DO...
 
-        # """
-    # Allow the user to play an arbitrary number of hands.
-    #
-    # * Asks the user to input 'n' or 'r' or 'e'.
-    #
-    # * If the user inputs 'n', let the user play a new (random) hand.
-    #   When done playing the hand, ask the 'n' or 'e' question again.
-    #
-    # * If the user inputs 'r', let the user play the last hand again.
-    #
-    # * If the user inputs 'e', exit the game.
-    #
-    # * If the user inputs anything else, ask them again.
-    # """
-    # # TO DO...
 #
 # Build data structures used for entire session and play game
 #
