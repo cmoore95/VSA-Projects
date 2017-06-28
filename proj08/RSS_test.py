@@ -187,7 +187,6 @@ class ProblemSet5(unittest.TestCase):
         nob = NewsStory('', '', "something something new york city", '', '')
         noc = NewsStory('', '', '', "something something new york city", '')
 
-
         self.assertTrue(pt.evaluate(a), "PhraseTrigger doesn't find phrase in title")
         self.assertTrue(pt.evaluate(b), "PhraseTrigger doesn't find phrase in subject")
         self.assertTrue(pt.evaluate(c), "PhraseTrigger doesn't find phrase in summary")

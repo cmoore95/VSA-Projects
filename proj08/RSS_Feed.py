@@ -86,6 +86,7 @@ class Trigger(object):
 class WordTrigger(Trigger):
     def __init__(self, word):
         self.word=word.lower()
+
     def is_word_in(self,text):
         text=text.lower()
         for thing in text:
@@ -99,6 +100,7 @@ class WordTrigger(Trigger):
 
 # TODO: TitleTrigger
 
+
 class TitleTrigger(WordTrigger):
     def evaluate(self, story):
         title=story.get_title()
@@ -110,8 +112,8 @@ class TitleTrigger(WordTrigger):
 
 class SubjectTrigger(WordTrigger):
     def evaluate(self, story):
-        subject=story.get_subject()
-        status= self.is_word_in(subject)
+        subject = story.get_subject()
+        status = self.is_word_in(subject)
         return status
 
 
@@ -119,8 +121,8 @@ class SubjectTrigger(WordTrigger):
 
 class SummaryTrigger(WordTrigger):
     def evaluate(self, story):
-        summary=story.get_summary()
-        status= self.is_word_in(summary)
+        summary = story.get_summary()
+        status = self.is_word_in(summary)
         return status
 
 
@@ -131,7 +133,8 @@ class SummaryTrigger(WordTrigger):
 
 class NotTrigger(Trigger):
     def __init__(self, T):
-        self.t=T
+        self.t = T
+
     def evaluate(self, x):
         if self.t.evaluate(x) is not True:
             return True
@@ -143,8 +146,9 @@ class NotTrigger(Trigger):
 
 class AndTrigger(Trigger):
     def __init__(self, T, T_2):
-        self.t=T
-        self.T_2=T_2
+        self.t = T
+        self.T_2 = T_2
+
     def evaluate(self, x):
         if self.t.evaluate(x) is True and self.T_2.evaluate(x) is True:
             return True
@@ -156,63 +160,42 @@ class AndTrigger(Trigger):
 
 class OrTrigger(Trigger):
     def __init__(self, T, T_2):
-        self.t=T
-        self.T_2=T_2
+        self.t = T
+        self.T_2 = T_2
+
     def evaluate(self, x):
         if self.t.evaluate(x) is True or self.T_2.evaluate(x) is True:
             return True
         else:
             return False
 
-
-
 # Phrase Trigger
 # Question 9
 
 # TODO: PhraseTrigger
 
+
 class PhraseTrigger(Trigger):
     def __init__(self,phrase):
         self.phrase=phrase
+
     def evaluate(self, story):
-        summary=story.get_summary()
-        # for thing in summary:
-        #     if thing in string.punctuation:
-        #         summary = summary.replace(thing, ' ')
-        # summary = summary.split()
-        title=story.get_title()
-        # for stuff in title:
-        #     if stuff in string.punctuation:
-        #         title=title.replace(stuff, ' ')
-        # title=title.split()
+        summary = story.get_summary()
+        title = story.get_title()
         subject=story.get_subject()
-        # for  some in subject:
-        #     if some in string.punctuation:
-        #         subject=subject.replace(some, ' ')
-        # subject=subject.split
-        return self.phrase in summary or self.phrase in title or self.phrase in  subject
-
-
-
-#======================
+        return self.phrase in summary or self.phrase in title or self.phrase in subject
 # Part 3
 # Filtering
-#======================
+
 
 def filter_stories(stories, triggerlist):
+    story_lst = []
     for story in stories:
         for trigger in triggerlist:
-            if trigger(story) is False:
-                stories=stories.remove(story)
+            if trigger.evaluate(story) is True:
+                story_lst.append(story)
                 break
-    return stories
-
-
-
-
-
-
-
+    return story_lst
 
 
 """
@@ -251,21 +234,57 @@ def readTriggerConfig(filename):
     # 'lines' has a list of lines you need to parse
     # Build a set of triggers from it and
     # return the appropriate ones
-    
+    t_list = []
+    t_dict = {}
+
+    for item in lines:
+        line = item.split()
+        if "TITLE" in item:
+            word = line[2]
+            t_dict[line[0]] = TitleTrigger(word)
+        elif "SUBJECT" in item:
+            word = line[2]
+            t_dict[line[0]] = SubjectTrigger(word)
+        elif "SUMMARY" in item:
+            word = line[2]
+            t_dict[line[0]] = SummaryTrigger(word)
+        elif "NOT" in item:
+            word=line[2]
+            t_dict[line[0]] = NotTrigger(word)
+        elif "AND" in item:
+            t1=t_dict[line[2]]
+            t2=t_dict[line[3]]
+            t_dict[line[0]] = AndTrigger(t1, t2)
+        elif "OR" in item:
+            t1 = line[2]
+            t2 = line[3]
+            t_dict[line[0]] = OrTrigger(t1, t2)
+        elif "PHRASE" in item:
+            phrase = ""
+            for word in line[2:]:
+                phrase = phrase+word + " "
+            t_dict[line[0]] = PhraseTrigger(phrase)
+        elif "ADD" in item:
+            for t in line[1:]:
+                t_list.append(t_dict[t])
+    return t_list
+
+
 import thread
+
 
 def main_thread(p):
     # A sample trigger list - you'll replace
     # this with something more configurable in Problem 11
-    t1 = SubjectTrigger("Trump")
-    t2 = SummaryTrigger("Vanderbilt")
-    t3 = PhraseTrigger("Net Neutrality")
-    t4 = OrTrigger(t2, t3)
-    triggerlist = [t1, t4]
+    # t1 = SubjectTrigger("Trump")
+    # t2 = SummaryTrigger("Trump")
+    # t3 = PhraseTrigger("Trump")
+    # t4 = OrTrigger(t2, t3)
+    # triggerlist = [t1, t4]
     
     # TODO: Problem 11
-    # After implementing readTriggerConfig, uncomment this line 
-    #triggerlist = readTriggerConfig("triggers.txt")
+    # After implementing readTriggerConfig, uncomment this line
+    triggerlist = readTriggerConfig("triggers.txt")
 
     guidShown = []
     
