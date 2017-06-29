@@ -16,9 +16,10 @@ if birthday == 'Y':
 elif birthday == 'N':
     year=2016
 
+
 while age < 100:
     age=age +1
     year=year+1
-    print year
+
 
 print name,' will turn 100 in', year

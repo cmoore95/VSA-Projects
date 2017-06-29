@@ -242,9 +242,9 @@ class Robot(object):
         # """
         # raise NotImplementedError
 
-    #def updatePositionAndClean(self):
+    def updatePositionAndClean(self):
 
-
+            # Code doesn't go here, put code from here in StandardRobot.updatePositionAndClean.
 
         # """
         # Simulate the raise passage of a single time-step.
@@ -252,7 +252,7 @@ class Robot(object):
         # Move the robot to a new position and mark the tile it is on as having
         # been cleaned.
         # """
-        # raise NotImplementedError
+        raise NotImplementedError
 
 
 # === Problem 2

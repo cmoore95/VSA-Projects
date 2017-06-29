@@ -24,32 +24,32 @@ for number1 in range(total1):
     previous1 = old1
 
 
-total2=int(raw_input('How many Fibonacci numbers would you like (WHILE Loop)? '))
+total2 = int(raw_input('How many Fibonacci numbers would you like (WHILE Loop)? '))
 
-number2=0
-current2=1
-previous2=0
-old2=previous2+current2
+number2 = 0
+current2 = 1
+previous2 = 0
+old2 = previous2 + current2
 while number2 < total2:
-    old2=current2
+    old2 = current2
     print current2
-    current2=current2+previous2
-    previous2=old2
-    number2=number2+1
+    current2 = current2 + previous2
+    previous2 = old2
+    number2 = number2 + 1
 
 
-total3=int(raw_input('How many powers of 2 would you like? '))
+total3 = int(raw_input('How many powers of 2 would you like? '))
 
-number3=1
-current3=1
-previous3=2
-while number3<(total3+ 1):
-    current3=current3*previous3
-    number3=number3+1
+number3 = 1
+current3 = 1
+previous3 = 2
+while number3 < (total3 + 1):
+    current3 = current3 * previous3
+    number3 = number3 + 1
     print current3
 
 
-total4=int(raw_input('What number do you want the divisors of? '))
+total4 = int(raw_input('What number do you want the divisors of? '))
 
 number4=1
 answer4=0
