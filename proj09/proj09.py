@@ -45,21 +45,28 @@ class Position(object):
         new_x = old_x + delta_x
         new_y = old_y + delta_y
         return Position(new_x, new_y)
+    def __str__(self):
+        return '(' + str(self.x) + ", " + str(self.y) + ')'
 
 # === Problem 1
 
+
+#spot.x =
+
+
 class RectangularRoom(object):
-    """
-    A RectangularRoom represents a rectangular region containing clean or dirty
-    tiles.
+    # """
+    # A RectangularRoom represents a rectangular region containing clean or dirty
+    # tiles.
+    #
+    # A room has a width and a height and contains (width * height) tiles. At any
+    # particular time, each of these tiles is either clean or dirty.
+    # """
 
-    A room has a width and a height and contains (width * height) tiles. At any
-    particular time, each of these tiles is either clean or dirty.
-    """
     def __init__(self, width, height):
-        self.width=width
-        self.height=height
-
+        self.width = width
+        self.height = height
+        self.clean_list = []
 
 
         # """
@@ -73,8 +80,8 @@ class RectangularRoom(object):
         # raise NotImplementedError
     
     def cleanTileAtPosition(self, pos):
-        clean_list=[]
-        clean_list.append(pos)
+        self.clean_list.append(pos)
+        return self.clean_list
 
 
         # """
@@ -87,12 +94,10 @@ class RectangularRoom(object):
         # raise NotImplementedError
 
     def isTileCleaned(self, m, n):
-        self.m=m
-        self.n=n
-        if m in clean_list and n in clean_list:
-            return True
-        else:
-            return False
+        for var in self.clean_list:
+            if var.getX() == m and var.getY() == n:
+                return True
+        return False
 
 
         # """
@@ -107,7 +112,7 @@ class RectangularRoom(object):
         # raise NotImplementedError
 
     def getNumTiles(self):
-        num_tiles=width*height
+        num_tiles = self.width * self.height
         return num_tiles
 
 
@@ -118,10 +123,10 @@ class RectangularRoom(object):
         # """
         #raise NotImplementedError
 
-    def getNumCleanedTiles(self):
-        num_cleaned=0
-        for item in clean_list:
-            num_cleaned=num_cleaned+1
+    def getNumCleanedTiles(self, clean_list):
+        num_cleaned = 0
+        for var in self.clean_list:
+            num_cleaned = num_cleaned + 1
         return num_cleaned
 
 
@@ -133,9 +138,9 @@ class RectangularRoom(object):
         # raise NotImplementedError
 
     def getRandomPosition(self):
-        self.m=random.randint(1,width)
-        self.n=random.randint(1,height)
-        return Position(m,n)
+        m = random.randint(0,self.width)
+        n = random.randint(0,self.height)
+        return Position(m, n)
 
 
         # """
@@ -146,11 +151,10 @@ class RectangularRoom(object):
         # raise NotImplementedError
 
     def isPositionInRoom(self, pos):
-        if m>width and n>height:
-            return False
-        else:
+        if 0 <= pos.getX() < self.width and 0 <= pos.getY() < self.height:
             return True
-
+        else:
+            return False
 
 
         # """
@@ -160,6 +164,9 @@ class RectangularRoom(object):
         # returns: True if pos is in the room, False otherwise.
         # """
         # raise NotImplementedError
+
+
+
 
 class Robot(object):
     """
@@ -172,8 +179,8 @@ class Robot(object):
     updatePositionAndClean(), which simulates a single time-step.
     """
     def __init__(self, room, speed):
-        self.room=room
-        self.speed=speed
+        self.room = room
+        self.speed = speed
 
 
         # """
@@ -187,7 +194,8 @@ class Robot(object):
         # raise NotImplementedError
 
     def getRobotPosition(self):
-
+        robpos=RectangularRoom.getRandomPosition
+        return Position(robpos)
 
 
         # """
@@ -198,7 +206,8 @@ class Robot(object):
         # raise NotImplementedError
     
     def getRobotDirection(self):
-
+        robdir=random.randint(0,360)
+        return robdir
 
 
         # """
@@ -209,8 +218,8 @@ class Robot(object):
         # """
         # raise NotImplementedError
 
-    def setRobotPosition(self, position):
-        POSITION=Position(m,n)
+    def setRobotPosition(self, robpos):
+        POSITION = robpos
         return POSITION
 
 
@@ -221,8 +230,8 @@ class Robot(object):
         # """
         # raise NotImplementedError
 
-    def setRobotDirection(self, direction):
-        DIRECTION=random.randint(1,360)
+    def setRobotDirection(self, robdir):
+        DIRECTION = robdir
         return DIRECTION
 
 
@@ -233,7 +242,7 @@ class Robot(object):
         # """
         # raise NotImplementedError
 
-    def updatePositionAndClean(self):
+    #def updatePositionAndClean(self):
 
 
 
@@ -265,8 +274,7 @@ class StandardRobot(Robot):
 
 # === Problem 3
 
-def runSimulation(num_robots, speed, width, height, min_coverage, num_trials,
-                  robot_type):
+def runSimulation(num_robots, speed, width, height, min_coverage, num_trials, robot_type):
     """
     Runs NUM_TRIALS trials of the simulation and returns the mean number of
     time-steps needed to clean the fraction MIN_COVERAGE of the room.
@@ -312,16 +320,33 @@ class RandomWalkRobot(Robot):
     A RandomWalkRobot is a robot with the "random walk" movement strategy: it
     chooses a new direction at random after each time-step.
     """
-    raise NotImplementedError
+    #raise NotImplementedError
 
 
 # === Problem 6
 
 # For the parameters tested below (cleaning 80% of a 20x20 square room),
-# RandomWalkRobots take approximately twice as long to clean the same room as
+# RandomWalkRobots take approximately twice as long to clean the same room
 # StandardRobots do.
 def showPlot3():
     """
     Produces a plot comparing the two robot strategies.
     """
     raise NotImplementedError
+
+
+# spot=Position(6,5)
+# print "spot: (", spot.getX() , ", ", spot.getY(), ")"
+# print spot
+
+print Position(8,1)
+
+room = RectangularRoom(10, 10)
+room.cleanTileAtPosition(Position(4, 5))
+room.cleanTileAtPosition(Position(4, 9))
+print 'isTileCleaned: ', room.isTileCleaned(4, 5)
+print 'getNumTiles: ', room.getNumTiles()
+print 'getNumCleanedTiles: ', room.getNumCleanedTiles(clean_list = [])
+print 'getRandomPosition: ', room.getRandomPosition()
+print 'isPositionInRoom: ', room.isPositionInRoom(Position(5, 5))
+
